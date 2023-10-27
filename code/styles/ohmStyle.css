@@ -1,0 +1,35 @@
+#componentsPanel {
+    position: absolute;
+    height: 100%;
+    width: 20%;
+    background-color: lightgray;
+}
+
+.itemBox {
+    margin: 5px;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 2px solid salmon;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.itemLabel {
+    font-family: monospace;
+    position: absolute;
+    left: 50%;
+    bottom: 0%;
+    transform: translate(-50%,-50%);
+}
+
+.itemImg {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%,-20%);
+}
+
+.steel {
+    background-color: gray;
+}
