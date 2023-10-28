@@ -31,5 +31,11 @@
 }
 
 .steel {
-    background-color: gray;
+    background-image: linear-gradient(to bottom, lightgray, grey);
+    position: absolute;
+    top: 50%;
+    transform: translate(0%, -50%);
+    width: 30%;
+    height: 20%;
+    border-radius: 30%;
 }

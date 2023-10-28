@@ -1,76 +1,37 @@
-/*  Original code: Coding Artist
-link: https://www.youtube.com/watch?v=b13NSWyQ0tw
+/*  Original code: W3 Schools
+link: https://www.w3schools.com/howto/howto_js_draggable.asp
 adapted by: Splantapot
 */
 function addDrag(element) {
-    let initialX = 0, initialY = 0;
-    let moveElement = false;
-
-    let events = {
-        mouse: {
-            down: "mousedown",
-            move: "mousemove",
-            up: "mouseup"
-        },
-        touch: {
-            down: "touchstart",
-            move: "touchmove",
-            up: "touchend"
-        }
-    };
-
-    let deviceType = "";
-
-    const isTouchDevice = () => {
-        try {
-            document.createEvent("TouchEvent");
-            deviceType = "touch"
-            return true;
-        }  catch (e) {
-            document.createEvent("MouseEvent");
-            deviceType = "mouse"
-            return false;
-        }
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    if (document.getElementById(element.id + "header")) {
+      document.getElementById(element.id + "header").onmousedown = dragMouseDown;
+    } else {
+      element.onmousedown = dragMouseDown;
     }
-
-    isTouchDevice();
-
-    element.addEventListener(events[deviceType].down, (e) => {
-        e.preventDefault();
-        initialX = !isTouchDevice() ? e.clientX : e.touches[0].clientX;
-        initialY = !isTouchDevice() ? e.clientY : e.touches[0].clientY;
-        moveElement = true;
-    });
-
-    element.addEventListener(events[deviceType].move, (e) => {
-        if (moveElement) {
-
-            if (teclas.includes("Delete")) {
-                document.body.removeChild(element);
-            } else {
-
-                e.preventDefault();
-                let newX = !isTouchDevice() ? e.clientX : e.touches[0].clientX;
-                let newY = !isTouchDevice() ? e.clientY : e.touches[0].clientY;
-    
-                element.style.top =
-                    element.offsetTop - (initialY - newY) + "px";
-    
-                element.style.left =
-                    element.offsetLeft - (initialX - newX) + "px";
-    
-                initialX = newX;
-                initialY = newY;
-
-            }
-        }
-    });
-
-    element.addEventListener(events[deviceType].up, (stopMovement = (e) => {
-        moveElement = false;
-    }));
-
-    element.addEventListener(events[deviceType].up, (e) => {
-        moveElement = false; 
-    });
+  
+    function dragMouseDown(e) {
+      e = e || window.event;
+      e.preventDefault();
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      document.onmouseup = closeDragElement;
+      document.onmousemove = elementDrag;
+    }
+  
+    function elementDrag(e) {
+      e = e || window.event;
+      e.preventDefault();
+      pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      element.style.top = (element.offsetTop - pos2) + "px";
+      element.style.left = (element.offsetLeft - pos1) + "px";
+    }
+  
+    function closeDragElement() {
+      document.onmouseup = null;
+      document.onmousemove = null;
+    }
 }
