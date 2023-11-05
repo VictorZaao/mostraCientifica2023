@@ -1,37 +1,26 @@
-/*  Original code: W3 Schools
-link: https://www.w3schools.com/howto/howto_js_draggable.asp
-adapted by: Splantapot
-*/
-function addDrag(element) {
-    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    if (document.getElementById(element.id + "header")) {
-      document.getElementById(element.id + "header").onmousedown = dragMouseDown;
-    } else {
-      element.onmousedown = dragMouseDown;
+function addDrag(id = "id") {
+
+    const element = document.getElementById(id);
+    let offSetX, offSetY;
+
+    const move = (e) => {
+        element.style.left = `${e.clientX - offSetX}px`;
+        element.style.top = `${e.clientY - offSetY}px`;
     }
-  
-    function dragMouseDown(e) {
-      e = e || window.event;
-      e.preventDefault();
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-      document.onmouseup = closeDragElement;
-      document.onmousemove = elementDrag;
-    }
-  
-    function elementDrag(e) {
-      e = e || window.event;
-      e.preventDefault();
-      pos1 = pos3 - e.clientX;
-      pos2 = pos4 - e.clientY;
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-      element.style.top = (element.offsetTop - pos2) + "px";
-      element.style.left = (element.offsetLeft - pos1) + "px";
-    }
-  
-    function closeDragElement() {
-      document.onmouseup = null;
-      document.onmousemove = null;
-    }
+
+    element.addEventListener("mousedown", (e) => {
+        offSetX = e.clientX - element.offsetLeft
+        offSetY = e.clientY - element.offsetTop
+        document.addEventListener("mousemove", move);
+        element.classList.add("isMoving");
+    });
+
+    document.addEventListener("mouseup", (e) => {
+        document.removeEventListener("mousemove", move);
+        element.classList.remove("isMoving");
+    });
+}
+
+function statusDrag(id = "id") {
+    return document.getElementById(id).classList.contains("isMoving");
 }
